@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday, Hurraira 💌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --paper: #ffffff;
+    --ink: #1f2a44;
+    --soft: #5f6b8a;
+    --berry: #4f6df5;
+    --berry-deep: #3a50c9;
+    --lav: #dfe7ff;
+    --butter: #ffd84d;
+    --card-front: #ffffff;
+    --shadow: rgba(31, 42, 68, .16);
+    --hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;
+    --body: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); scroll-behavior: smooth; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 560px; margin: 0 auto; padding: 36px 20px 80px; text-align: center; }
+  section { margin-top: 72px; }
+  h1, h2 { font-family: var(--hand); font-weight: 700; margin: 0; line-height: 1.05; }
+  h1 { font-size: clamp(2.6rem, 11vw, 4rem); color: var(--berry); }
+  h2 { font-size: clamp(2rem, 8vw, 2.8rem); }
+  p { margin: 0; }
+  .sub { color: var(--soft); margin-top: 10px; font-size: 1.05rem; }
+  :focus-visible { outline: 3px solid var(--berry); outline-offset: 4px; border-radius: 12px; }
+
+  /* ---------- Envelope ---------- */
+  .intro { margin-top: 24px; }
+  .envelope {
+    all: unset; cursor: pointer; display: block; position: relative;
+    width: 290px; height: 196px; margin: 40px auto 0;
+    filter: drop-shadow(0 14px 18px var(--shadow));
+    perspective: 900px;
+  }
+  .envelope:focus-visible { outline: 3px solid var(--berry); outline-offset: 10px; border-radius: 12px; }
+  .env-back { position: absolute; inset: 0; background: #bcd0ff; border-radius: 10px; }
+  .env-paper {
+    position: absolute; left: 18px; right: 18px; top: 14px; height: 150px;
+    background: var(--paper); border-radius: 6px;
+    transition: transform .7s .25s cubic-bezier(.3,1.3,.5,1);
+  }
+  .env-front {
+    position: absolute; inset: 0; border-radius: 10px;
+    background: #8fb0ff;
+    clip-path: polygon(0 0, 50% 56%, 100% 0, 100% 100%, 0 100%);
+    display: flex; align-items: flex-end; justify-content: center; padding-bottom: 20px;
+    font-family: var(--hand); font-size: 2rem; font-weight: 700; color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,.12);
+  }
+  .env-flap {
+    position: absolute; left: 0; right: 0; top: 0; height: 62%;
+    background: #6f95ff; border-radius: 10px 10px 0 0;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center; z-index: 3;
+    transition: transform .55s ease, z-index 0s .28s;
+  }
+  .seal {
+    position: absolute; left: 50%; top: 52%; width: 46px; height: 46px; margin: -23px 0 0 -23px;
+    border-radius: 50%; background: var(--berry-deep); color: #fff; z-index: 4;
+    display: grid; place-items: center; font-size: 1.3rem;
+    box-shadow: 0 3px 8px rgba(0,0,0,.25);
+    transition: opacity .25s;
+  }
+  .envelope .seal span { display: inline-block; animation: beat 1.6s ease-in-out infinite; }
+  @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.18); } 30% { transform: scale(1); } 45% { transform: scale(1.12); } }
+  .envelope.open .env-flap { transform: rotateX(180deg); z-index: 0; }
+  .envelope.open .env-paper { transform: translateY(-60px); }
+  .envelope.open .seal { opacity: 0; pointer-events: none; }
+  .hint { margin-top: 26px; color: var(--soft); font-size: 1rem; transition: opacity .3s; }
+  .hint.gone { opacity: 0; }
+
+  /* ---------- Letter ---------- */
+  .letter-wrap { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .9s ease; }
+  .letter-wrap.show { grid-template-rows: 1fr; }
+  .letter-wrap > div { overflow: hidden; }
+  .letter {
+    margin-top: 40px; padding: 34px 26px 30px; background: var(--paper); border-radius: 18px;
+    box-shadow: 0 12px 28px var(--shadow); text-align: left; position: relative;
+    background-image: repeating-linear-gradient(transparent 0, transparent 35px, rgba(79,109,245,.14) 36px);
+    background-position: 0 22px;
+  }
+  .letter::before {
+    content: ""; position: absolute; left: 0; right: 0; top: -12px; height: 24px; margin: 0 auto; width: 110px;
+    background: var(--butter); opacity: .85; transform: rotate(-3deg); border-radius: 4px;
+  }
+  .letter .line {
+    font-family: var(--hand); font-size: 1.6rem; line-height: 36px; font-weight: 500; margin-bottom: 36px;
+    opacity: 0; transform: translateY(8px);
+  }
+  .letter.reveal .line { animation: rise .7s ease forwards; animation-delay: calc(var(--i) * .55s); }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  .letter .line:first-child { font-size: 2rem; color: var(--berry); font-weight: 700; }
+  .letter .line:last-child { margin-bottom: 0; text-align: right; font-size: 1.9rem; font-weight: 700; color: var(--berry); }
+
+  /* ---------- Cake ---------- */
+  .cake { width: min(260px, 70vw); margin: 22px auto 0; display: block; overflow: visible; }
+  .cake .flame { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .45s ease, opacity .45s ease; animation: flick .9s ease-in-out infinite alternate; }
+  .cake .flame:nth-of-type(2) { animation-delay: .2s; }
+  .cake .flame:nth-of-type(3) { animation-delay: .45s; }
+  @keyframes flick { from { transform: scale(1, 1) rotate(-3deg); } to { transform: scale(.92, 1.1) rotate(3deg); } }
+  .cake.out .flame { animation: none; transform: scale(0); opacity: 0; }
+  .smoke { opacity: 0; fill: none; stroke: var(--soft); stroke-width: 2; stroke-linecap: round; }
+  .cake.out .smoke { animation: puff 1.6s ease-out forwards; }
+  @keyframes puff { 0% { opacity: .7; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-26px); } }
+  .btn {
+    all: unset; cursor: pointer; display: inline-block; margin-top: 22px; padding: 12px 26px;
+    background: var(--berry); color: #fff; border-radius: 999px; font-weight: 600; font-size: 1.05rem;
+    box-shadow: 0 5px 0 var(--berry-deep); transition: transform .12s, box-shadow .12s;
+  }
+  .btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--berry-deep); }
+  .btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+  .wish { min-height: 2.2em; margin-top: 18px; font-family: var(--hand); font-size: 1.9rem; color: var(--berry); }
+
+  /* ---------- Reasons ---------- */
+  .reasons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 28px; }
+  .flip { all: unset; cursor: pointer; display: block; height: 150px; perspective: 800px; }
+  .flip:focus-visible { outline: 3px solid var(--berry); outline-offset: 4px; border-radius: 16px; }
+  .flip-inner { position: relative; width: 100%; height: 100%; transition: transform .6s cubic-bezier(.4,1.4,.5,1); transform-style: preserve-3d; }
+  .flip[aria-pressed="true"] .flip-inner { transform: rotateY(180deg); }
+  .face {
+    position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    border-radius: 16px; display: grid; place-items: center; padding: 14px;
+    box-shadow: 0 8px 18px var(--shadow);
+  }
+  .face.front { background: var(--card-front); font-size: 2.2rem; }
+  .face.front small { display: block; font-size: .95rem; color: var(--soft); margin-top: 4px; font-family: var(--body); }
+  .face.back { background: var(--lav); transform: rotateY(180deg); font-family: var(--hand); font-size: 1.45rem; line-height: 1.25; font-weight: 700; }
+  .flip:nth-child(even) .face.back { background: var(--butter); color: #1f2a44; }
+
+  /* ---------- Finale ---------- */
+  .finale h2 { font-size: clamp(2.4rem, 10vw, 3.4rem); color: var(--berry); }
+  .finale .sig { font-family: var(--hand); font-size: 2rem; margin-top: 18px; }
+  .big-heart { font-size: 3rem; display: inline-block; animation: beat 1.6s ease-in-out infinite; }
+
+  [hidden] { display: none !important; }
+  canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .seal span, .big-heart, .cake .flame { animation: none; }
+    .letter .line { opacity: 1; transform: none; }
+    .letter.reveal .line { animation: none; }
+    .env-paper, .env-flap, .letter-wrap, .flip-inner { transition-duration: .01s; }
+  }
+</style>
+</head>
+<body>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<main>
+  <header class="intro">
+    <h1 id="title"></h1>
+    <p class="sub" id="subtitle"></p>
+    <button class="envelope" id="env" aria-label="Open the letter">
+      <div class="env-back"></div>
+      <div class="env-paper"></div>
+      <div class="env-front"></div>
+      <div class="env-flap"></div>
+      <div class="seal"><span>❤</span></div>
+    </button>
+    <p class="hint" id="hint">Tap the envelope to open it</p>
+  </header>
+
+  <div class="letter-wrap" id="letterWrap">
+    <div><article class="letter" id="letter" aria-live="polite"></article></div>
+  </div>
+
+  <div id="after" hidden>
+    <section id="cakeSection">
+      <h2>Make a wish, Hurraira</h2>
+      <p class="sub">Then blow out the candles.</p>
+      <svg class="cake" id="cake" viewBox="0 0 240 220" role="img" aria-label="A birthday cake with three lit candles">
+        <ellipse cx="120" cy="188" rx="104" ry="13" fill="var(--lav)"/>
+        <rect x="40" y="122" width="160" height="62" rx="14" fill="#8fb0ff"/>
+        <path d="M40 132 q10 16 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 V122 H40 Z" fill="#fff"/>
+        <rect x="70" y="80" width="100" height="46" rx="12" fill="#a8e6cf"/>
+        <path d="M70 90 q10 15 20 0 t20 0 t20 0 t20 0 t20 0 V80 H70 Z" fill="#fff"/>
+        <circle cx="62" cy="160" r="4" fill="#fff" opacity=".8"/><circle cx="100" cy="166" r="4" fill="var(--butter)"/>
+        <circle cx="140" cy="158" r="4" fill="#fff" opacity=".8"/><circle cx="178" cy="164" r="4" fill="var(--butter)"/>
+        <rect x="87" y="52" width="6" height="30" rx="2" fill="var(--butter)"/>
+        <rect x="117" y="52" width="6" height="30" rx="2" fill="#fff"/>
+        <rect x="147" y="52" width="6" height="30" rx="2" fill="var(--butter)"/>
+        <g class="flame"><ellipse cx="90" cy="42" rx="6" ry="11" fill="#ff9f1c"/><ellipse cx="90" cy="46" rx="3" ry="6" fill="#ffe66d"/></g>
+        <g class="flame"><ellipse cx="120" cy="42" rx="6" ry="11" fill="#ff9f1c"/><ellipse cx="120" cy="46" rx="3" ry="6" fill="#ffe66d"/></g>
+        <g class="flame"><ellipse cx="150" cy="42" rx="6" ry="11" fill="#ff9f1c"/><ellipse cx="150" cy="46" rx="3" ry="6" fill="#ffe66d"/></g>
+        <path class="smoke" d="M90 40 q-5 -8 0 -16"/><path class="smoke" d="M120 40 q5 -8 0 -16"/><path class="smoke" d="M150 40 q-5 -8 0 -16"/>
+      </svg>
+      <button class="btn" id="blow">Blow out the candles</button>
+      <p class="wish" id="wish" aria-live="polite"></p>
+    </section>
+
+    <section>
+      <h2>Why I love you</h2>
+      <p class="sub">Tap a card. There are more reasons than I could fit.</p>
+      <div class="reasons" id="reasons"></div>
+    </section>
+
+    <section class="finale">
+      <div class="big-heart" aria-hidden="true">💗</div>
+      <h2 id="finalTitle"></h2>
+      <p class="sub" id="finalNote"></p>
+      <p class="sig" id="sig"></p>
+      <button class="btn" id="again">Send more confetti</button>
+    </section>
+  </div>
+</main>
+
+<script>
+  /* =========================================================
+     EDIT ME — change any words below to make it truly yours.
+     ========================================================= */
+  const CONFIG = {
+    to: "Hurraira",
+    from: "Muskan",
+    subtitle: "A little something I made, just for you.",
+    letter: [
+      "Happy Birthday, my favorite person.",
+      "Today the world got you, and I'm so glad it did. Because of you, ordinary days feel softer, funnier, and a little bit brighter.",
+      "I love the way you make me feel safe being exactly who I am. I love your laugh, your kindness, and how you always seem to know when I need you.",
+      "I don't have big enough words for what you mean to me, so I made you this tiny corner of the internet instead. I hope it makes you smile the way you make me smile every single day.",
+      "May this year bring you everything good you deserve, and may I be right beside you for all of it.",
+      "Always yours, Muskan 💗"
+    ],
+    wish: "I hope your wish comes true. Mine already did: you. 💗",
+    reasons: [
+      "Your smile fixes my whole day.",
+      "You listen like every word I say matters.",
+      "You make me laugh when I least expect it.",
+      "You make me feel safe and understood.",
+      "You are kind in a quietly rare way.",
+      "You're my favorite hello and my hardest goodbye."
+    ],
+    finalNote: "Thank you for being you. I love you more than this page could ever say."
+  };
+
+  /* ---------- Fill in text ---------- */
+  const $ = (id) => document.getElementById(id);
+  $("title").textContent = "Happy Birthday, " + CONFIG.to + "!";
+  $("subtitle").textContent = CONFIG.subtitle;
+  $("finalTitle").textContent = "Happy Birthday, " + CONFIG.to;
+  $("finalNote").textContent = CONFIG.finalNote;
+  $("sig").textContent = "With all my love, " + CONFIG.from;
+  document.querySelector(".env-front").textContent = "For " + CONFIG.to;
+
+  const letter = $("letter");
+  CONFIG.letter.forEach((t, i) => {
+    const p = document.createElement("p");
+    p.className = "line"; p.style.setProperty("--i", i); p.textContent = t;
+    letter.appendChild(p);
+  });
+
+  const reasons = $("reasons");
+  CONFIG.reasons.forEach((t, i) => {
+    const b = document.createElement("button");
+    b.className = "flip"; b.setAttribute("aria-pressed", "false");
+    b.setAttribute("aria-label", "Reason " + (i + 1) + ". Tap to reveal.");
+    b.innerHTML = '<div class="flip-inner"><div class="face front"><div>' +
+      ["💌","🌷","🧸","🍓","🌙","✨"][i % 6] + '<small>Tap me</small></div></div><div class="face back"></div></div>';
+    b.querySelector(".back").textContent = t;
+    b.addEventListener("click", () => {
+      const on = b.getAttribute("aria-pressed") === "true";
+      b.setAttribute("aria-pressed", String(!on));
+      b.setAttribute("aria-label", on ? "Reason " + (i + 1) + ". Tap to reveal." : "Reason " + (i + 1) + ": " + t);
+      if (!on) burst(b.getBoundingClientRect().left + b.offsetWidth / 2, b.getBoundingClientRect().top + 40, 14);
+    });
+    reasons.appendChild(b);
+  });
+
+  /* ---------- Confetti ---------- */
+  const canvas = $("confetti"), ctx = canvas.getContext("2d");
+  let W = 0, H = 0, parts = [], running = false;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function resize() {
+    const d = window.devicePixelRatio || 1;
+    W = canvas.width = innerWidth * d; H = canvas.height = innerHeight * d;
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+  }
+  addEventListener("resize", resize); resize();
+  const COLORS = ["#4f6df5", "#8fb0ff", "#ffd84d", "#a8e6cf", "#ff7a8a", "#ffb3c0"];
+  function burst(x, y, n) {
+    if (reduce) return;
+    for (let i = 0; i < n; i++) {
+      const a = Math.random() * Math.PI * 2, s = 3 + Math.random() * 7;
+      parts.push({
+        x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 5, g: .22 + Math.random() * .1,
+        r: 4 + Math.random() * 6, rot: Math.random() * 6, vr: (Math.random() - .5) * .3,
+        c: COLORS[(Math.random() * COLORS.length) | 0], heart: Math.random() < .4, life: 130 + Math.random() * 60
+      });
+    }
+    if (!running) { running = true; requestAnimationFrame(tick); }
+  }
+  function rain() {
+    for (let k = 0; k < 6; k++) setTimeout(() => burst(Math.random() * innerWidth, innerHeight * .25, 26), k * 220);
+  }
+  function drawHeart(r) {
+    ctx.beginPath();
+    ctx.moveTo(0, r * .35);
+    ctx.bezierCurveTo(-r, -r * .4, -r * .5, -r, 0, -r * .4);
+    ctx.bezierCurveTo(r * .5, -r, r, -r * .4, 0, r * .35);
+    ctx.fill();
+  }
+  function tick() {
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    parts = parts.filter((p) => p.life > 0 && p.y < innerHeight + 30);
+    for (const p of parts) {
+      p.vy += p.g; p.vx *= .985; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.life--;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.globalAlpha = Math.min(1, p.life / 40); ctx.fillStyle = p.c;
+      if (p.heart) drawHeart(p.r * 1.3); else ctx.fillRect(-p.r / 2, -p.r / 3, p.r, p.r * .6);
+      ctx.restore();
+    }
+    if (parts.length) requestAnimationFrame(tick); else { running = false; ctx.clearRect(0, 0, innerWidth, innerHeight); }
+  }
+
+  /* ---------- Open the envelope ---------- */
+  const env = $("env");
+  let opened = false;
+  env.addEventListener("click", () => {
+    if (opened) return;
+    opened = true;
+    env.classList.add("open");
+    env.setAttribute("aria-label", "Letter opened");
+    $("hint").classList.add("gone");
+    const r = env.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top + 40, 36);
+    setTimeout(() => {
+      $("letterWrap").classList.add("show");
+      letter.classList.add("reveal");
+      $("after").hidden = false;
+      setTimeout(() => letter.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }), 350);
+    }, 650);
+  });
+
+  /* ---------- Candles ---------- */
+  const cake = $("cake");
+  $("blow").addEventListener("click", () => {
+    if (cake.classList.contains("out")) { cake.classList.remove("out"); $("wish").textContent = ""; $("blow").textContent = "Blow out the candles"; return; }
+    cake.classList.add("out");
+    $("blow").textContent = "Light them again";
+    $("wish").textContent = CONFIG.wish;
+    const r = cake.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top + 40, 60);
+  });
+
+  $("again").addEventListener("click", rain);
+</script>
+</body>
+</html>
